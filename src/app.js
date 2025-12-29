@@ -9,7 +9,7 @@ app.use(cookieParser());
 
 const API_BASE_URL =
     process.env.NODE_ENV === "production"
-        ? "https://job-tracker.onrender.com"
+        ? "https://job-tracker-1pce.onrender.com/"
         : "http://localhost:3000";
 
 
@@ -134,10 +134,6 @@ app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const API_BASE_URL =
-            process.env.NODE_ENV === "production"
-                ? "https://job-tracker.onrender.com"
-                : "http://localhost:3000";
 
         const response = await axios.post(
             `${API_BASE_URL}/api/auth/login`,
