@@ -134,6 +134,11 @@ app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        const API_BASE_URL =
+            process.env.NODE_ENV === "production"
+                ? "https://job-tracker.onrender.com"
+                : "http://localhost:3000";
+
         const response = await axios.post(
             `${API_BASE_URL}/api/auth/login`,
             { email, password }
@@ -141,20 +146,21 @@ app.post("/login", async (req, res) => {
 
         const token = response.data.token;
 
-        // Store JWT in cookie
         res.cookie("token", token, {
             httpOnly: true,
-            sameSite: "strict"
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 60 * 60 * 1000 // 1 hour
         });
 
-        // Redirect after login
         res.redirect("/jobs");
 
     } catch (error) {
         console.error("Login error:", error.response?.data || error.message);
-        res.send("Invalid email or password");
+        res.send("Login failed");
     }
 });
+
 
 app.post("/jobs", frontendAuth, async (req, res) => {
     try {
