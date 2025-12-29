@@ -35,10 +35,18 @@ exports.register = async(req, res) => {
 
         res.status(201).json({ message: "User registered successfully" });
         
-    } catch(error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
+    } catch (error) {
+        console.error("REGISTER ERROR FULL:", error);
+        console.error("REGISTER ERROR MESSAGE:", error.message);
+        console.error("REGISTER ERROR STACK:", error.stack);
+
+        if (error.code) {
+            console.error("POSTGRES ERROR CODE:", error.code);
+        }
+
+        res.status(500).json({ message: "Registration failed" });
     }
+
 }
 
 const jwt = require("jsonwebtoken");
