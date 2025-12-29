@@ -146,11 +146,12 @@ app.post("/login", async (req, res) => {
 
         const token = response.data.token;
 
+        // 🚨 THIS LINE MUST RUN IN THIS ROUTE
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
-            maxAge: 60 * 60 * 1000 // 1 hour
+            maxAge: 60 * 60 * 1000
         });
 
         res.redirect("/jobs");
