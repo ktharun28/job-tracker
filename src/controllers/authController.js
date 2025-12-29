@@ -4,6 +4,8 @@ const validator = require("validator");
 
 
 exports.register = async(req, res) => {
+    console.log("REGISTER API HIT");
+    console.log("BODY:", req.body);
     try {
         const { name, email, password } = req.body;
 
