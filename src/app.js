@@ -7,6 +7,11 @@ const axios = require("axios");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
+const API_BASE_URL =
+    process.env.NODE_ENV === "production"
+        ? "https://job-tracker.onrender.com"
+        : "http://localhost:3000";
+
 
 
 app.set("view engine", "ejs");
@@ -67,7 +72,7 @@ app.get("/jobs", frontendAuth, async (req, res) => {
         const selectedStatus = req.query.status || "All";
 
         const response = await axios.get(
-            "http://localhost:3000/api/jobs",
+            `${API_BASE_URL}/api/jobs`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -110,7 +115,7 @@ app.post("/register", async (req, res) => {
         const { name, email, password } = req.body;
 
         // Call backend API
-        await axios.post("http://localhost:3000/api/auth/register", {
+        await axios.post(`${API_BASE_URL}/api/auth/register`, {
             name,
             email,
             password
@@ -130,7 +135,7 @@ app.post("/login", async (req, res) => {
         const { email, password } = req.body;
 
         const response = await axios.post(
-            "http://localhost:3000/api/auth/login",
+            `${API_BASE_URL}/api/auth/login`,
             { email, password }
         );
 
@@ -157,7 +162,7 @@ app.post("/jobs", frontendAuth, async (req, res) => {
         const token = req.cookies.token;
 
         await axios.post(
-            "http://localhost:3000/api/jobs",
+            `${API_BASE_URL}/api/jobs`,
             { company, role, status },
             {
                 headers: {
@@ -180,7 +185,7 @@ app.post("/jobs/:id/delete", frontendAuth, async (req, res) => {
         const jobId = req.params.id;
 
         await axios.delete(
-            `http://localhost:3000/api/jobs/${jobId}`,
+            `${API_BASE_URL}/api/jobs/${jobId}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -202,7 +207,7 @@ app.get("/jobs/:id/edit", frontendAuth, async (req, res) => {
         const jobId = req.params.id;
 
         const response = await axios.get(
-            "http://localhost:3000/api/jobs",
+            `${API_BASE_URL}/api/jobs`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -230,7 +235,7 @@ app.post("/jobs/:id/edit", frontendAuth, async (req, res) => {
         const { company, role, status } = req.body;
 
         await axios.put(
-            `http://localhost:3000/api/jobs/${jobId}`,
+            `${API_BASE_URL}/api/jobs/${jobId}`,
             { company, role, status },
             {
                 headers: {
@@ -253,7 +258,7 @@ app.get("/jobs/export", frontendAuth, async (req, res) => {
         const token = req.cookies.token;
 
         const response = await axios.get(
-            "http://localhost:3000/api/jobs",
+            `${API_BASE_URL}/api/jobs`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -291,7 +296,7 @@ app.post("/ai/insight", frontendAuth, async (req, res) => {
         const token = req.cookies.token;
 
         const response = await axios.post(
-            "http://localhost:3000/api/ai/insight",
+            `${API_BASE_URL}/api/ai/insight`,
             req.body,
             {
                 headers: {
