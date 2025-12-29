@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Job | Job Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <h1>Job Tracker</h1>
+
+    <div class="card">
+        <h2>Edit Job</h2>
+
+        <form method="POST" action="/jobs/<%= job.id %>/edit">
+            <input
+                type="text"
+                name="company"
+                value="<%= job.company %>"
+                placeholder="Company"
+                required
+            />
+
+            <input
+                type="text"
+                name="role"
+                value="<%= job.role %>"
+                placeholder="Role"
+                required
+            />
+
+            <select name="status">
+                <option <%= job.status === "Applied" ? "selected" : "" %>>Applied</option>
+                <option <%= job.status === "Interview" ? "selected" : "" %>>Interview</option>
+                <option <%= job.status === "Offer" ? "selected" : "" %>>Offer</option>
+                <option <%= job.status === "Rejected" ? "selected" : "" %>>Rejected</option>
+            </select>
+
+            <button type="submit">Update Job</button>
+        </form>
+    </div>
+
+    <div class="footer">
+        <a href="/jobs">← Back to Jobs</a>
+    </div>
+
+</div>
+
+</body>
+</html>
