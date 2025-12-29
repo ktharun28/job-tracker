@@ -9,7 +9,7 @@ app.use(cookieParser());
 
 const API_BASE_URL =
     process.env.NODE_ENV === "production"
-        ? "https://job-tracker-1pce.onrender.com/"
+        ? "https://job-tracker-1pce.onrender.com"
         : "http://localhost:3000";
 
 
