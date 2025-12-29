@@ -51,8 +51,9 @@ app.get("/api/protected", authMiddleware, (req, res) => {
 
 
 app.get("/", (req, res) => {
-    res.send("Server + DB + Auth running.");
+    res.redirect("/login");
 });
+
 
 app.get("/test", (req, res) => {
     res.render("test");
